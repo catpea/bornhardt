@@ -1,0 +1,26 @@
+{
+  "name": "bornhardt",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Miniature WikiWiki",
+  "main": "index.js",
+  "scripts": {
+    "save": "git add .; git commit -m 'Updated Release'; git push; npm version patch; npm publish; git push;",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "@catpea",
+  "license": "GPL",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/catpea/bornhardt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/catpea/bornhardt/issues"
+  },
+  "homepage": "https://github.com/catpea/bornhardt#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "js-beautify": "^1.15.4"
+  }
+}
