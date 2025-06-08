@@ -13,11 +13,12 @@ export default function layout({top="", breadcrumb="", navigation="", aside="", 
       <link href="/css/theme.css" rel="stylesheet">
 
       <script type="module" src="/components/time-ago.js"></script>
+      <script type="module" src="/components/feed-face.js"></script>
 
     </head>
     <body>
 
-    <header class="py-3 mb-4 border-bottom shadow">
+    <header class="py-3 mb-0 border-bottom shadow">
       <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Bootstrap menu">
@@ -52,17 +53,15 @@ export default function layout({top="", breadcrumb="", navigation="", aside="", 
       </div>
     </header>
 
-    <div class="container-fluid pb-3">
-      <div class="d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
-        <div> ${navigation} </div>
-        <div> ${body} </div>
-      </div>
-    </div>
 
-      <script src="/js/popper.min.js"></script>
-      <script src="/js/bootstrap.bundle.min.js"></script>
-      <script src="/client.js"></script>
-      <script src="/view.js"></script>
+    <div> ${body} </div>
+
+    <div> ${navigation} </div>
+
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/client.js"></script>
+    <script src="/edit.js"></script>
 
 
     </body>

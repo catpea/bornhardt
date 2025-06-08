@@ -50,6 +50,9 @@ import primaryLayout from './html/layout/primary.js';
 import articleComponent from './html/components/article.js';
 import articlesComponent from './html/components/articles.js';
 
+import editorLayout from './html/layout/editor.js';
+import editorComponent from './html/components/editor.js';
+
 import Storage from './modules/Storage.js';
 
 const storageDirectory = path.join(import.meta.dirname, 'storage');
@@ -75,10 +78,32 @@ app.get('/', function(req, res){
   res.redirect('./main')
 });
 
+app.get('/edit/:articleName', async function(req, res){
+  const allowedArticleNameCharacters = /^[a-zA-Z0-9-]*$/;
+  if (!allowedArticleNameCharacters.test(req.params.articleName)) {
+    throw new Error("Article Name contains invalid characters. DEBUG:" + req.params.articleName);
+  }
+
+  const articleName = req.params.articleName;
+  const article = await storage.get(articleName);
+
+  const body = editorComponent({
+    name: articleName,
+    ...article,
+  });
+
+  const navigation = "";
+  const output = editorLayout({navigation, body});
+  // res.send(beautify.html(output, beautiful.html));
+  res.send(output);
+
+
+})
+
 app.get('/:articleName', async function(req, res){
 
-  const allowedArtiucleNameCharacters = /^[a-zA-Z0-9-]*$/;
-  if (!allowedArtiucleNameCharacters.test(req.params.articleName)) {
+  const allowedArticleNameCharacters = /^[a-zA-Z0-9-]*$/;
+  if (!allowedArticleNameCharacters.test(req.params.articleName)) {
     throw new Error("Article Name contains invalid characters.");
   }
 
@@ -88,8 +113,6 @@ app.get('/:articleName', async function(req, res){
 
   const articleName = req.params.articleName;
   const article = await storage.get(articleName);
-  console.log('MAGIC:', article );
-
 
   const body = articleComponent({
     name: articleName,
@@ -97,10 +120,9 @@ app.get('/:articleName', async function(req, res){
     text: marked.parse( article.text ),
   });
 
-
-
   const output = primaryLayout({navigation, body});
   res.send(beautify.html(output, beautiful.html));
+
 });
 
 const server = app.listen(3000);
