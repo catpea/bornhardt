@@ -1,7 +1,7 @@
 {
   "name": "bornhardt",
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Miniature WikiWiki",
   "main": "index.js",
   "scripts": {
