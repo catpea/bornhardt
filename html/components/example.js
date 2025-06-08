@@ -3,12 +3,12 @@
  * @param {Object[]} users - Array of user objects with .name and .email
  * @returns {string}
  */
-export default function renderUsersTemplate({users}) {
+export default function renderExampleTemplate({examples}) {
   return `
-    <h1>Users</h1>
-    <ul id="users">
-      ${users.map(user =>
-        `<li>${user.name} &lt;${user.email}&gt;</li>`
+    <h1>Example</h1>
+    <ul id="example">
+      ${examples.map(user =>
+        `<li>${example.name} &lt;${example.email}&gt;</li>`
       ).join('\n  ')}
     </ul>
   `

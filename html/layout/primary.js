@@ -6,15 +6,18 @@ export default function layout({top="", breadcrumb="", navigation="", aside="", 
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>MikiMikiMeowMeow &middot; bornhardt edition</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+      <title>bornhardt &middot; MikiMikiMeowMeow</title>
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
       <link href="/css/bootstrap.min.css" rel="stylesheet">
       <link href="/css/icons/bootstrap-icons.min.css" rel="stylesheet">
+      <link href="/css/theme.css" rel="stylesheet">
+
+      <script type="module" src="/components/time-ago.js"></script>
+
     </head>
     <body>
 
-
-    <header class="py-3 mb-3 border-bottom">
+    <header class="py-3 mb-4 border-bottom shadow">
       <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Bootstrap menu">
@@ -56,9 +59,11 @@ export default function layout({top="", breadcrumb="", navigation="", aside="", 
       </div>
     </div>
 
-
       <script src="/js/popper.min.js"></script>
       <script src="/js/bootstrap.bundle.min.js"></script>
+      <script src="/client.js"></script>
+
+
     </body>
   </html>
   `;

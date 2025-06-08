@@ -8,7 +8,8 @@
  */
 
 import { resolve, join } from 'node:path';
-import { existsSync, mkdirSync, readdir, readdirSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+import { access, readdir, constants, stat } from 'node:fs/promises';
 
 /**
  * Generates a random UUID v4 string.
@@ -145,20 +146,46 @@ export default class Storage {
    */
 
   async all() {
-    if (!existsSync(this.rootPath)) return [];
-    return new Promise((resolve, reject) => {
-      readdir(this.rootPath, (err, files) => {
-        if (err) return reject(err);
-        const dirs = files.filter(entry => {
-          try {
-            return existsSync(join(this.rootPath, entry)) && !entry.startsWith('.');
-          } catch {
-            return false;
-          }
-        });
-        resolve(dirs);
-      });
-    });
+    await access(this.rootPath, constants.R_OK | constants.W_OK);
+    const entries = await readdir(this.rootPath);
+    const response = [];
+    for (const entry of entries) {
+      const path = join(this.rootPath, entry);
+      try {
+        await access(path, constants.R_OK);
+        const stats = await stat(path);
+        if (stats.isDirectory() && !entry.startsWith('.')) {
+          response.push(entry);
+        }
+      } catch (error) {
+        // Ignore inaccessible or non-directory nodes
+        console.log(error)
+      }
+    }
+    return response;
+  }
+
+  async allMetadata() {
+    await access(this.rootPath, constants.R_OK | constants.W_OK);
+    const entries = await readdir(this.rootPath);
+    const response = [];
+    for (const name of entries) {
+      const path = join(this.rootPath, name);
+      try {
+        await access(path, constants.R_OK);
+        const stats = await stat(path);
+        if (stats.isDirectory() && !name.startsWith('.')) {
+          response.push({
+            name,
+            updated: stats.mtime
+          });
+        }
+      } catch (error) {
+        // Ignore inaccessible or non-directory nodes
+        console.log(error)
+      }
+    }
+    return response;
   }
 
   /**
@@ -251,7 +278,7 @@ export default class Storage {
 }
 
 // Example usage:
-// const und = new UndDatabase({ db: './my-db' });
-// und.put({ id: 'alice-profile', name: 'Alice' });
-// const alice = und.get('alice-profile');
+// const storage = new Storage({ db: './my-db' });
+// storage.put({ id: 'alice-profile', name: 'Alice' });
+// const alice = storage.get('alice-profile');
 // console.log(alice);

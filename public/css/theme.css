@@ -1,0 +1,15 @@
+[data-bs-theme="dark"] {
+    --bs-body-bg: #002b36;
+    --bs-body-color: #809193;
+    --bs-border-color: #072326;
+
+    .list-group-item.list-group-item-action:not(.active):hover {
+    background-color: #073642 ! important;
+
+    }
+
+    .active {
+      border-color: #072326;
+      background-color: #0e424f;
+    }
+}
