@@ -8,7 +8,7 @@
  */
 
 import { resolve, join } from 'node:path';
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+import { existsSync, mkdirSync, readdir, readdirSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
 
 /**
  * Generates a random UUID v4 string.
@@ -38,7 +38,7 @@ function alphanumSort(arr) {
  * @class UndDatabase
  * Multiprocess/Multiuser safe, revisioned file storage.
  */
-export class UndDatabase {
+export default class Storage {
   /**
    * @param {object} configuration - Example: { db: './my-db' }
    */
@@ -143,11 +143,21 @@ export class UndDatabase {
    * 5. List all object ids (directory names) in the root storage path.
    * @returns {string[]}
    */
-  all() {
+
+  async all() {
     if (!existsSync(this.rootPath)) return [];
-    return readdirSync(this.rootPath).filter(entry => {
-      // Only include directories (object ids)
-      return existsSync(join(this.rootPath, entry)) && !entry.startsWith('.');
+    return new Promise((resolve, reject) => {
+      readdir(this.rootPath, (err, files) => {
+        if (err) return reject(err);
+        const dirs = files.filter(entry => {
+          try {
+            return existsSync(join(this.rootPath, entry)) && !entry.startsWith('.');
+          } catch {
+            return false;
+          }
+        });
+        resolve(dirs);
+      });
     });
   }
 

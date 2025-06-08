@@ -21,6 +21,7 @@
   "homepage": "https://github.com/catpea/bornhardt#readme",
   "dependencies": {
     "express": "^5.1.0",
-    "js-beautify": "^1.15.4"
+    "js-beautify": "^1.15.4",
+    "marked": "^15.0.12"
   }
 }
