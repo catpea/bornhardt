@@ -165,7 +165,7 @@ export default class Storage {
     return response;
   }
 
-  async allMetadata() {
+  async allData() {
     await access(this.rootPath, constants.R_OK | constants.W_OK);
     const entries = await readdir(this.rootPath);
     const response = [];
@@ -175,9 +175,10 @@ export default class Storage {
         await access(path, constants.R_OK);
         const stats = await stat(path);
         if (stats.isDirectory() && !name.startsWith('.')) {
+          const object = this.get(name);
           response.push({
             name,
-            updated: stats.mtime
+            ...object,
           });
         }
       } catch (error) {

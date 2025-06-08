@@ -82,7 +82,7 @@ app.get('/:articleName', async function(req, res){
     throw new Error("Article Name contains invalid characters.");
   }
 
-  const articles = (await storage.allMetadata());
+  const articles = (await storage.allData());
 
   const navigation = articlesComponent({ articles }, {active: req.params.articleName});
 

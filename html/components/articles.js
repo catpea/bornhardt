@@ -14,8 +14,8 @@ export default function renderArticlesTemplate({articles}, {active}) {
           <h5 class="mb-1">${article.name}</h5>
           <small><time-ago datetime="${article.updated}"></time-ago></small>
         </div>
-        <p class="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
+        <p class="mb-1 opacity-50">${article.text.trim().substr(0,32)}...</p>
+        <small class="opacity-50">${article.text.length} bytes.</small>
       </a>`
       ).join('\n  ')}
 
